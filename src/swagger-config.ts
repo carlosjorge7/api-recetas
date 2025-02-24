@@ -1,6 +1,9 @@
 import swaggerJsdoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
 import { Express } from "express";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 // Configuración de Swagger
 const swaggerOptions: swaggerJsdoc.Options = {
@@ -14,7 +17,7 @@ const swaggerOptions: swaggerJsdoc.Options = {
     },
     servers: [
       {
-        url: "http://localhost:4000", // Cambia esto en producción
+        url: process.env.BASE_URL_PROD || process.env.BASE_URL_LOCAL, // Cambia esto en producción
         description: "Servidor Local",
       },
     ],
