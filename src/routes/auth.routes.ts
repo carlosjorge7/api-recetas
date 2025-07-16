@@ -16,6 +16,7 @@ const router = express.Router();
  *   post:
  *     summary: Registrar un nuevo usuario
  *     tags: [Autenticación]
+ *     security: []
  *     requestBody:
  *       required: true
  *       content:
@@ -45,6 +46,7 @@ router.post("/register", register);
  *   post:
  *     summary: Iniciar sesión y obtener tokens
  *     tags: [Autenticación]
+ *     security: []
  *     requestBody:
  *       required: true
  *       content:
@@ -83,6 +85,7 @@ router.post("/login", login);
  *   post:
  *     summary: Generar un nuevo access token con el refresh token
  *     tags: [Autenticación]
+ *     security: []
  *     requestBody:
  *       required: true
  *       content:

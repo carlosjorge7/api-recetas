@@ -17,8 +17,23 @@ const swaggerOptions: swaggerJsdoc.Options = {
     },
     servers: [
       {
-        url: process.env.BASE_URL_PROD || process.env.BASE_URL_LOCAL, // Cambia esto en producción
-        description: "Servidor Local",
+        url: "http://localhost:4000",
+        description: "Servidor de Desarrollo",
+      },
+    ],
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: "http",
+          scheme: "bearer",
+          bearerFormat: "JWT",
+          description: "Ingrese el token JWT obtenido del login",
+        },
+      },
+    },
+    security: [
+      {
+        bearerAuth: [],
       },
     ],
   },
