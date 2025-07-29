@@ -17,8 +17,14 @@ const swaggerOptions: swaggerJsdoc.Options = {
     },
     servers: [
       {
-        url: "http://localhost:4000",
-        description: "Servidor de Desarrollo",
+        url:
+          process.env.NODE_ENV === "production"
+            ? "https://api-recetas-0rb8.onrender.com"
+            : "http://localhost:4000",
+        description:
+          process.env.NODE_ENV === "production"
+            ? "Servidor de Producción"
+            : "Servidor de Desarrollo",
       },
     ],
     components: {
@@ -45,6 +51,33 @@ const swaggerSpec = swaggerJsdoc(swaggerOptions);
 
 // Función para configurar Swagger en la aplicación
 export const setupSwagger = (app: Express): void => {
-  app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-  console.log("📄 Swagger Docs disponible en http://localhost:4000/api-docs");
+  const swaggerUiOptions = {
+    explorer: true,
+    swaggerOptions: {
+      docExpansion: "none",
+      filter: true,
+      showRequestHeaders: true,
+      tryItOutEnabled: true,
+      supportedSubmitMethods: ["get", "post", "put", "delete", "patch"],
+      requestInterceptor: (req: any) => {
+        req.headers["Content-Type"] = "application/json";
+        return req;
+      },
+    },
+    customCss: ".swagger-ui .topbar { display: none }",
+    customSiteTitle: "API de Recetas - Documentación",
+  };
+
+  app.use(
+    "/api-docs",
+    swaggerUi.serve,
+    swaggerUi.setup(swaggerSpec, swaggerUiOptions)
+  );
+
+  const baseUrl =
+    process.env.NODE_ENV === "production"
+      ? "https://api-recetas-0rb8.onrender.com"
+      : "http://localhost:4000";
+
+  console.log(`📄 Swagger Docs disponible en ${baseUrl}/api-docs`);
 };
