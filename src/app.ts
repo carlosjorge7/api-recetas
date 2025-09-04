@@ -4,6 +4,7 @@ import helmet from "helmet";
 import morgan from "morgan";
 import authRoutes from "./routes/auth.routes";
 import recipeRoutes from "./routes/recipes.routes";
+import ingredientRoutes from "./routes/ingredients.routes";
 import { setupSwagger } from "./swagger-config";
 
 const app = express();
@@ -74,7 +75,8 @@ app.options("*", (req, res) => {
 });
 
 app.use("/auth", authRoutes);
-app.use("/recipes", recipeRoutes);
+app.use("/api/recipes", recipeRoutes);
+app.use("/api/ingredients", ingredientRoutes);
 
 setupSwagger(app);
 
